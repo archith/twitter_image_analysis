@@ -1,0 +1,7 @@
+pandas
+pillow
+pytube
+openpyxl
+tables
+beautifulsoup4
+requests
