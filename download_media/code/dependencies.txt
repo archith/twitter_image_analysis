@@ -6,4 +6,5 @@ tables
 beautifulsoup4
 requests
 tweepy
-
+pycurl
+BeautifulSoup

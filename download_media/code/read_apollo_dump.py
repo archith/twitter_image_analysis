@@ -172,3 +172,8 @@ print('Videos will be available at :' + out_video_folder)
 #Generating debug excel file
 render_xlsx.render_dbg_xls(json_file, db_xl_file_path, config)
 print('Debug Excel file available at : ' + db_xl_file_path)
+
+# Xlsx sheet puts a limit on number of links included, so write a csv file as well
+render_xlsx.render_dbg_csv(json_file, db_xl_file_path+'.csv')
+print('Debug CSV file available at : ' + db_xl_file_path+'.csv')
+

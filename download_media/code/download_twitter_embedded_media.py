@@ -9,9 +9,12 @@ import tweepy
 
 # This code is not yet integrated with the 'read_apollo_dump' script as this depends on twitter rate limits
 # Load  Twitter API credentials
-key_dict = pickle.load(open("./myTwittecd rKeys.p", "rb"))
+key_dict = pickle.load(open("./myTwitterKeys.p", "rb"))
 
 apollo_dump_file = '../primaries_4/tweets_500samples.json'
+apollo_dump_file = os.path.abspath(apollo_dump_file)
+apollo_dump_w_emb_media_file = apollo_dump_file.strip('.json') + '_w_emb_media_file.json'
+complete_twitter_data_file = apollo_dump_file.strip('.json') + '_complete_twitter_data.json'
 
 _, out_img_folder, out_video_folder, _ = util.get_media_file_paths(apollo_dump_file)
 config = util.Config(overwrite_media=False)
@@ -45,9 +48,7 @@ def save_embd_image(url, folder_loc):
         response = requests.get(url)
     except:
         e = sys.exc_info()[0]
-        print(e)
-        print 'Response code in get_inst_image: ' + str(response.status_code)
-        return response.status_code, None
+        print('Error in save_embd_image with code : ' + e)
 
     # Save data as Image files
     try:
@@ -69,6 +70,9 @@ def save_embd_image(url, folder_loc):
 with open(apollo_dump_file, 'r') as f:
     lines = f.readlines()
 
+emb_media_json_fid = open(apollo_dump_w_emb_media_file, 'w')
+comp_twit_data_file = open(complete_twitter_data_file, 'w')
+
 for idx, l in enumerate(lines):
     j = json.loads(l)
 
@@ -80,16 +84,35 @@ for idx, l in enumerate(lines):
         e = sys.exc_info()[0]
         print(e)
         print 'Failed to download tweet for line number : %d' % idx
+        continue
 
     media_links = tweet.entities.get('media', [])
     if len(media_links) == 0:
         # No extended entities/media url found
         continue
-
+    j['media_links'] = []
     for link_obj in media_links:
         media_url = link_obj['media_url']
         print('Link found : %s'% media_url)
         save_embd_image(media_url, out_img_folder)
+        j['media_links'].append(media_url)
+
+    l_media = json.dumps(j)
+    emb_media_json_fid.write(l_media)
+
+    l_comp = json.dumps(tweet._json)
+    comp_twit_data_file.write(l_comp)
+
+comp_twit_data_file.close()
+emb_media_json_fid.close()
+
+
+
+
+
+
+
+
 
 
 

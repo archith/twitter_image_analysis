@@ -3,6 +3,7 @@
 import pandas, os, collections, pprint, url_table
 from download_instagram import save_inst_image
 from download_youtube import get_youtube_vid
+from download_arbitrary_web_image import save_arb_image
 import util
 
 
@@ -18,14 +19,14 @@ def download_media_per_entry(url, url_domain, out_img_folder, out_video_folder, 
         yt_link = url
         media_path = get_youtube_vid(yt_link, out_video_folder)
 
-    elif url_domain == url_table.TINYPIC_DOM:
-        media_path = None
-    elif url_domain == url_table.IMGUR_DOM:
-        media_path = None
+    # elif url_domain == url_table.TINYPIC_DOM:
+    #     media_path = None
+    # elif url_domain == url_table.IMGUR_DOM:
+    #     media_path = None
 
     else:
-        pass
-        # print 'Unimplemented domain for ' + url_domain + ' : ' + url
+        # For arbitrary links, we extract the largest image in the webpage
+        media_path = save_arb_image(url, out_img_folder)
 
     if media_path:
         media_downloaded = True
@@ -34,7 +35,11 @@ def download_media_per_entry(url, url_domain, out_img_folder, out_video_folder, 
 
 
 # Download the media links after all the entries have been processed into a Dataframe
+
 def download_media(hdf5_file_name, out_img_folder, out_video_folder, config=util.Config()):
+
+    print('Deprecated function, not supported!! Use download_media_per_entry instead.')
+    assert 0
     url_df = pandas.read_hdf(hdf5_file_name)
 
     # Check where most of the URL stats are present

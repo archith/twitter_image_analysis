@@ -4,7 +4,14 @@ import os, sys
 
 
 def get_youtube_vid(url, file_loc, file_name=None):
-    yt = YouTube(url)
+    try:
+        yt = YouTube(url)
+    except:
+        e = sys.exc_info()[0]
+        print('Failed to create pytube object from url : ' + url + 'with error: ' + str(e))
+        return None
+
+
     yt_filename = yt.filename.replace(" ", "_")
     if not file_name:
         filepath = os.path.join(file_loc, yt_filename+'.mp4')

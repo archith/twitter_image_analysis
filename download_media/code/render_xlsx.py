@@ -87,9 +87,9 @@ def colorize_xl(xl_file_name, domain_string=url_table.INSTAGRAM_DOM):
 def render_dbg_xls(json_file, excel_file, config=util.Config()):
     media_hdf5_file_path, _, _, _ = util.get_media_file_paths(json_file)
 
+    generate_dbg_xls(media_hdf5_file_path, excel_file)
     print('Generated excel sheet.')
 
-    generate_dbg_xls(media_hdf5_file_path, excel_file)
     print('Colorizing excel sheet.')
 
     if config.download_instagram:
@@ -100,3 +100,13 @@ def render_dbg_xls(json_file, excel_file, config=util.Config()):
         colorize_xl(excel_file, domain_string=url_table.IMGUR_DOM)
     if config.download_tinypic:
         colorize_xl(excel_file, domain_string=url_table.TINYPIC_DOM)
+
+
+def generate_dbg_csv(media_hdf5_file_path, csv_file):
+    _media_url_df = pandas.read_hdf(media_hdf5_file_path, '/url_group/readout')
+    _media_url_df.to_csv(csv_file)
+
+
+def render_dbg_csv(json_file, csv_file):
+    media_hdf5_file_path, _, _, _ = util.get_media_file_paths(json_file)
+    generate_dbg_csv(media_hdf5_file_path, csv_file)
