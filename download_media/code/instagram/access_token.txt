@@ -1,7 +1,0 @@
-(venv) archith@titan:~/work/twitter_image_analytics/code/instagram$ python get_access_token.py
-Visit this page and authorize access in your browser: https://www.instagram.com/accounts/login/?force_classic_login=&next=/oauth/authorize%3Fscope%3Dbasic%2Bcomments%2Brelationships%2Blikes%26redirect_uri%3Dhttp%3A//vision.ece.ucsb.edu%26response_type%3Dcode%26client_id%3D4abe3c64f81a4f92837b6284a6fd1f05
-Paste in code in query string after redirect: 6453f2215a2c402a95bd41246c919208
-access token:
-(u'2954746500.4abe3c6.492728d12db64bfd9aa9e03146651f83', {u'username': u'archithjohn', u'bio': u'', u'website': u'', u'profile_picture': u'https://scontent.cdninstagram.com/t51.2885-19/s150x150/12729431_1011345502272277_171821943_a.jpg', u'full_name': u'Archith John', u'id': u'2954746500'})
-
-access token: 2954746500.4abe3c6.492728d12db64bfd9aa9e03146651f83
